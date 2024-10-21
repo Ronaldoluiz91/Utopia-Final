@@ -181,14 +181,17 @@ function enviarReserva() {
         .then(data => {
             document.getElementById('loading').style.display = 'none';
             if (data.status) {
+
+                // alert(data.msg);
+
                 // Se a reserva foi bem-sucedida, abre o modal com os dados da reserva
                 abreModal({
                     nome: nome,
                     whatsapp: whatsapp,
-                    descricaoTipoReserva: data.descricaoTipoReserva, // Supondo que essas informações venham do servidor
-                    descricaoMesa: data.descricaoMesa, // Supondo que essas informações venham do servidor
+                    descricaoTipoReserva: data.tipoReserva,
+                    quantidade: data.capacidade,
                     dataReserva: data.dataReserva,
-                    descricaoHora: data.descricaoHora // Supondo que essas informações venham do servidor
+                    descricaoHora: data.hora
                 });
             } else {
                 alert(data.msg); // Exibe mensagem de erro
@@ -201,10 +204,10 @@ function abreModal(reserva) {
     // Preenchendo os campos do modal com os dados da reserva
     document.getElementById('reservaRelatorio').innerHTML = reserva.nome;
     document.getElementById('telRelatorio').innerHTML = reserva.whatsapp;
-    document.getElementById('tipoRelatorio').innerHTML = reserva.descricaoTipoReserva; // Use a descrição do tipo de reserva
-    document.getElementById('quantRelatorio').innerHTML = reserva.descricaoMesa; // Use a descrição da mesa
+    document.getElementById('tipoRelatorio').innerHTML = reserva.descricaoTipoReserva;
+    document.getElementById('quantRelatorio').innerHTML = reserva.quantidade;
     document.getElementById('dataRelatorio').innerHTML = reserva.dataReserva;
-    document.getElementById('horaRelatorio').innerHTML = reserva.descricaoHora; // Use a descrição do horário
+    document.getElementById('horaRelatorio').innerHTML = reserva.descricaoHora;
     document.getElementById('status').innerText = "Reserva confirmada";
 
     // Exibir o modal
